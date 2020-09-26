@@ -112,7 +112,7 @@ const AppNavigator = createBottomTabNavigator(
         paddingTop: 5,
         paddingBottom: 30,
         height: 100,
-        position: 'absolute'
+        position: 'relative'
       },
     },
   }

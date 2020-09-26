@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, ScrollView, SafeAreaView } from 'react-native';
+import { Text, View, StyleSheet, ScrollView, SafeAreaView } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { useSelector, useDispatch } from 'react-redux';
 // imports card component - styled event containers
@@ -40,7 +41,7 @@ const Dashboard = (props) => {
           <View style={styles.container}>
             <View style={styles.eventContainter}>
               <Text style={styles.location}>LATER TODAY IN <Text style={styles.locationText}>{location.toUpperCase()}</Text></Text>
-              {events.map(event => <Card style={styles.event} key={event.id} time={event.start__dateTime} summary={event.summary}></Card>)}
+              {events.map(event => <Card onPress={() =>props.navigation.navigate('Calendar')} style={styles.event} key={event.id} time={event.start__dateTime} summary={event.summary}></Card>)}
             </View>
             <TouchableOpacity
               style={styles.calendarButton}
@@ -111,6 +112,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: 60,
     textAlign: 'center',
+   
+   
   },
   buttonText: {
     color: 'white',
