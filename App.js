@@ -1,42 +1,57 @@
-import React from 'react';
+import React from "react";
+import { MenuProvider } from 'react-native-popup-menu'
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import { Provider } from "react-redux";
+import ReduxThunk from "redux-thunk";
+import GeneralStatusBarColor from "./components/GeneralStatusBarColor";
+import { useFonts } from "@expo-google-fonts/inter";
+import AppLoading from "expo-app-loading";
 
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
-import ReduxThunk from 'redux-thunk';
-
-import * as Font from 'expo-font';
+import * as Font from "expo-font";
 // imports event store reducer
-import eventReducer from './store/reducers/Event';
+import eventReducer from "./store/reducers/Event";
 // imports resource store reducer
-import resourceReducer from './store/reducers/Resource';
+import resourceReducer from "./store/reducers/Resource";
 
 const rootReducer = combineReducers({
   events: eventReducer,
-  resources: resourceReducer
+  resources: resourceReducer,
 });
 
 // allows for async dispatch
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
-// loads app with custom font
-const componentDidMount = () => {
-  Font.loadAsync({
-    'ModernoFB': require('./assets/fonts/ModernoFB-Semibold.otf'),
-    'Futura-Light': require('./assets/fonts/Futura-Light.ttf'),
-    'Futura-Book': require('./assets/fonts/Futura-Book.ttf'),
-    'Futura-Medium': require('./assets/fonts/Futura-Medium.ttf'),
-    'Futura-Bold': require('./assets/fonts/Futura-Bold.ttf'),
-  });
-};
-
 // imports app navigation (https://reactnavigation.org/)
-import AppNavigator from './navigation/AppNavigator';
+import AppNavigator from "./navigation/AppNavigator";
 
 export default function App() {
-  componentDidMount();
+  let [fontsLoaded] = useFonts({
+    "Clarendon-Regular": require("./assets/fonts/clarendon.otf"),
+    "Clarendon-Italic": require("./assets/fonts/clarendon-italic.otf"),
+    "Clarendon-Bold": require("./assets/fonts/clarendon-bold.otf"),
+    "Clarendon-Bold-Italic": require("./assets/fonts/clarendon-bold-italic.otf"),
+    "Din-Regular": require("./assets/fonts/din.otf"),
+    "Din-Bold": require("./assets/fonts/din-bold.otf"),
+    "Garamond-Regular": require("./assets/fonts/garamond.otf"),
+    "Garamond-Bold": require("./assets/fonts/garamond-bold.otf"),
+    "Garamond-Italic": require("./assets/fonts/garamond-italic.otf"),
+    "Garamond-Bold-Italic": require("./assets/fonts/garamond-bold-italic.otf"),
+    "Icomoon": require("./assets/fonts/icomoon.ttf"),
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
+
   return (
     <Provider store={store}>
-      <AppNavigator />
+    <MenuProvider>
+        <GeneralStatusBarColor
+          backgroundColor="black"
+          barStyle="light-content"
+        />
+        <AppNavigator />
+        </MenuProvider>
     </Provider>
   );
-};
+}

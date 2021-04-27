@@ -5,6 +5,8 @@ import { useDispatch } from 'react-redux';
 // imports store actions to dispatch
 import * as eventActions from '../store/actions/Event';
 
+
+
 const LocationScreen = () => {
   // controls on/off for provo switch (app default)
   const [provo, setProvo] = useState(true);
@@ -12,6 +14,8 @@ const LocationScreen = () => {
   const [slc, setSlc] = useState(false);
 
   const dispatch = useDispatch();
+
+ 
   // method used to update events in store based on selected location
   const selectedLocation = (location) => {
     if(location === 'Provo') {
@@ -39,6 +43,7 @@ const LocationScreen = () => {
               setProvo(v);
               setSlc(false);
               selectedLocation('Provo');
+            
             }}
           />
         </View>
@@ -51,6 +56,7 @@ const LocationScreen = () => {
               setSlc(v);
               setProvo(false);
               selectedLocation('Salt Lake City');
+              
             }}
           />
         </View>
@@ -69,7 +75,7 @@ const styles = StyleSheet.create({
     fontSize: 40,
     textAlign: 'center',
     color: '#2B2B2B',
-    fontFamily: 'ModernoFB',
+    fontFamily: 'Garamond-Regular',
     marginTop: '20%'
   },
   subTitle: {
@@ -79,7 +85,7 @@ const styles = StyleSheet.create({
     margin: 8,
     marginBottom: 20,
     alignItems: 'center',
-    fontFamily: 'Futura-Book',
+    fontFamily: 'Clarendon-Regular',
     width: '90%'
   },
   filterContainer: {
@@ -94,7 +100,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   filterContainerText: {
-    fontFamily: 'Futura-Book',
+    fontFamily: 'Clarendon-Regular',
     color: '#2b2b2b',
     fontWeight: '400',
     fontSize: 18

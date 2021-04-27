@@ -1,69 +1,70 @@
-import React, { Component } from 'react';
-import * as Font from "expo-font";
-import { ActivityIndicator } from "react-native";
-import { StyleSheet, Text, View } from 'react-native';
+import React, {Component} from 'react';
+import * as Font from 'expo-font';
+import {ActivityIndicator} from 'react-native';
+import {StyleSheet, Text, View, ImageBackground, Image} from 'react-native';
+
+
+
+const ProvoImage = require ('../assets/provoHouseTitle.png');
+const StGImage = require ('../assets/StGeorgeHouseTitle.png');
+const SLCImage = require ('../assets/SaltLakeHouseTitle.png');
+let background;
+export const getLocationImage = (location) => {
+	if (location == 'Provo') {
+		background = ProvoImage;
+	} else if (location == 'Salt Lake City') {
+		background = SLCImage;
+	} else {
+		background = ProvoImage;
+	}
+};
 
 class DashboardWelcome extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { loading: true };
-  }
+	constructor(props) {
+		super(props);
+		this.state = {loading: true};
+	}
 
-  async componentWillMount() {
-    await Font.loadAsync({
-      'ModernoFB': require('../assets/fonts/ModernoFB-Semibold.otf'),
-      'Futura-Light': require('../assets/fonts/Futura-Light.ttf'),
-      'Futura-Book': require('../assets/fonts/Futura-Book.ttf'),
-      'Futura-Medium': require('../assets/fonts/Futura-Medium.ttf'),
-      'Futura-Bold': require('../assets/fonts/Futura-Bold.ttf'),
-    });
-    this.setState({ loading: false });
-  }
+	async componentWillMount() {
+		await Font.loadAsync({
+			'Clarendon': require('../assets/fonts/clarendon.otf'),
+			'Garamond-Bold': require('../assets/fonts/garamond-bold.otf'),
+			'Din-Bold': require('../assets/fonts/din-bold.otf'),
+		});
+    this.setState({loading: false});
+    getLocationImage()
+    
+	}
 
-  render() {
-    if (this.state.loading) {
-      return <ActivityIndicator />;
-    }
-    return (
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}>Welcome Back</Text>
-          <Text style={styles.subTitle}>Make today a great day.</Text>
-        </View>
-    );
-  }
+	render() {
+		if (this.state.loading) {
+			return <ActivityIndicator />;
+		}
+		return (
+			<View style={styles.titleContainer}>
+				<ImageBackground
+					//need to change background image to new logo
+					source={background}
+					style={styles.backgroundImage}
+				/>
+			</View>
+		);
+	}
 }
 
 const styles = StyleSheet.create({
-    titleContainer: {
-      backgroundColor: 'white',
-      width:'100%',
-      padding: 20,
-      borderBottomEndRadius: 30,
-      borderBottomStartRadius: 30,
-      marginBottom: 20,
-  
-      paddingLeft: 12,
-      paddingRight: 12,
-      top: 0,
-      // height: '100%',
-     
-    },
-    title: {
-      fontSize: 40,
-      textAlign: 'center',
-      color: '#2B2B2B',
-      marginTop: '20%',
-      fontFamily: 'ModernoFB',
-    },
-    subTitle: {
-      fontSize: 18,
-      color: '#686868',
-      textAlign: 'center',
-      margin: 8,
-      marginBottom: 20,
-      alignItems: 'center',
-      fontFamily: 'Futura-Book'
-    },
+	titleContainer: {
+		width: '100%',
+		top: 0,
+		// height: '100%',
+	},
+	backgroundImage: {
+		flex: 1,
+		resizeMode: 'cover',
+		justifyContent: 'center',
+		width: '100%',
+		height: 167,
+	},
 });
 
 export default DashboardWelcome;
